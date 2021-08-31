@@ -16,3 +16,6 @@ yarn.lock
 
 # Environment Variables should NEVER be published
 .env
+
+# Ignore CSS
+*.css
