@@ -1,9 +1,9 @@
 const express = require('express');
-const Celebrity = require('../models/celebrity');
+const Celebrity = require('./../models/celebrity');
 
-const celebrityRoute = express.Router();
+const celebrityRouter = express.Router();
 
-celebrityRoute.get('/celebrities', (request, response, next) => {
+celebrityRouter.get('/', (request, response, next) => {
   Celebrity.find()
     .then((celebrities) => {
       response.render('index', { celebrities });
@@ -13,4 +13,18 @@ celebrityRoute.get('/celebrities', (request, response, next) => {
     });
 });
 
-module.exports = celebrityRoute;
+celebrityRouter.get('/:id', (request, response, next) => {
+  const id = request.params.id;
+  let celebrity;
+  console.log('>>> hello');
+  Celebrity.findById(id)
+    .then((document) => {
+      celebrity = document;
+      response.render('celebrities/show', { celebrity });
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
+
+module.exports = celebrityRouter;
